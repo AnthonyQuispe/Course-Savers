@@ -1,0 +1,44 @@
+@use "../Style/partials/mixins" as *;
+@use "../Style/partials/typography" as *;
+@use "../Style/partials/variables" as *;
+@use "../Style/partials/global" as *;
+
+.main {
+  background-image: url(../../public/images/CourseSaver_background.png);
+  height: 100vh;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__background {
+    background: rgba(71, 13, 146, 0.75);
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+  }
+
+  &__logo {
+    position: absolute;
+    z-index: 2;
+    width: 75vw;
+    height: 29vw;
+  }
+  &__text {
+    position: relative;
+    z-index: 2;
+    top: 10%;
+
+    color: var(--course-savers-purple-white, #fcfcfc);
+    text-align: center;
+    font-size: 5.3vw;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
