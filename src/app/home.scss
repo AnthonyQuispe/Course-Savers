@@ -1,7 +1,7 @@
-@use "../Style/partials/mixins" as *;
-@use "../Style/partials/typography" as *;
-@use "../Style/partials/variables" as *;
-@use "../Style/partials/global" as *;
+@use "../style/partials/mixins" as *;
+@use "../style/partials/typography" as *;
+@use "../style/partials/variables" as *;
+@use "../style/partials/global" as *;
 
 .main {
   background-image: url(../../public/images/CourseSaver_background.png);
