@@ -1,3 +1,7 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "typography" as *;
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -8,6 +12,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-weight: 400;
+  font-family: Poppins;
 }
 
 a {
