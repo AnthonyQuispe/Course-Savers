@@ -1,0 +1,14 @@
+.nav-bottom {
+  position: absolute;
+  bottom: 0;
+  background: var(--course-savers-purple-gray-purp, #e5e4ed);
+  display: inline-flex;
+  align-items: flex-start;
+  width: 100%;
+  justify-content: space-evenly;
+
+  &__icons {
+    width: 15vw;
+    height: 6vh;
+  }
+}
