@@ -1,49 +1,40 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function GET() {
-    const userData = {
-        id: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'johndoe@example.com',
-    }
+    const usersList = await prisma.users.findMany();
+    console.log(usersList)
+    return NextResponse.json({ data: usersList }, { status: 201 })
+}
 
-    return NextResponse.json({ data: userData }, { status: 200 })
+export async function POST(request: NextRequest) {
+    const { body: data } = await request.json(); //parses json data
+    console.log(`this is the body of the request: ${data}`)
+    const newUser = await prisma.users.create({ data });
+    return NextResponse.json({ data: newUser }, { status: 201 })
 }
 
 export async function PUT(request: Request) {
-    const { firstName, lastName, email } = await request.json();
+    const { body: data } = await request.json();
+    const updateUser = await prisma.users.update({
+        where: { user_username: data.user_username },
+        data: {
+            // Provide the properties to update and their new values
+            user_email: data.user_email,
+        },
+    });
 
-    updateUser(firstName, lastName, email);
-
-    const updatedUserData = {
-        firstName,
-        lastName,
-        email,
-    }
-
-    return NextResponse.json({ data: updatedUserData })
+    return NextResponse.json({ data: updateUser });
 }
 
-function updateUser(firstName: string, lastName: string, email: string) {
-    console.log(firstName, lastName, email)
-}
+export async function DELETE(request: Request) {
+    const { body : data } = await request.json();
 
-export async function POST(request: Request) {
-    const { firstName, lastName, email } = await request.json();
+    const deleteUser = await prisma.users.delete({
+        where: { user_username : data.user_username },
+    });
 
-    const userId = createUser(firstName, lastName, email);
-
-    const newUserData = {
-        id: userId,
-        firstName,
-        lastName,
-        email,
-    }
-
-    return NextResponse.json({ data: newUserData })
-}
-
-function createUser(firstName: string, lastName: string, email: string) {
-    console.log(firstName, lastName, email)
+    return NextResponse.json({ data: deleteUser},{ status: 200 });
 }
