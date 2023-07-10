@@ -2,7 +2,7 @@
 
 @mixin cover-title {
   font-family: Inter;
-  font-size: 60px;
+  font-size: 3.75rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -10,14 +10,14 @@
 }
 @mixin body-style {
   font-family: Inter;
-  font-size: 30px;
+  font-size: 1.875rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 @mixin subtitle-style {
   font-family: Inter;
-  font-size: 30px;
+  font-size: 1.875rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -32,7 +32,7 @@
 }
 @mixin stat-large-style {
   font-family: Inter;
-  font-size: 60px;
+  font-size: 3.75rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;

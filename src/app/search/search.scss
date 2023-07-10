@@ -16,11 +16,9 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    position: absolute;
-    top: 160px;
     border-radius: 25px;
-    width: 88vw;
-    height: 130vw;
+    width: 90%;
+    height: 54%;
     flex-shrink: 0;
     background: $BG_Color;
 
@@ -48,7 +46,7 @@
 
   &__label {
     color: $BlackText;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-family: Poppins;
     font-style: normal;
     font-weight: 400;
@@ -57,10 +55,10 @@
 
   &__dropdown {
     width: 73vw;
-    height: 16vw;
+    height: 5vh;
     color: $DarkGrayTxt;
     background-color: $InputGray;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-family: Poppins;
     font-style: normal;
     font-weight: 400;
@@ -72,7 +70,7 @@
 
   &__map {
     width: 18vw;
-    height: 14vw;
+    height: 5vh;
   }
 
   &__button {
@@ -82,15 +80,15 @@
     /* Btn Shadow */
     box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.1);
     display: flex;
-    height: 15vw;
-    width: 34vw;
-    padding: 12px 24px;
+    height: 47px;
+    width: 110px;
+    padding: 0.75rem 1.5rem;
     justify-content: center;
     align-items: center;
     gap: 10px;
     color: $White;
     font-family: Poppins;
-    font-size: 6vw;
+    font-size: 1.2rem;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -101,7 +99,7 @@
   &-container__text {
     color: $BlackText;
     font-family: Poppins;
-    font-size: 5vw;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
