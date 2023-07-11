@@ -58,16 +58,30 @@ model Semesters {
   year Int
   startDate DateTime
   endDate DateTime
+  classes Classes[]
 }
 
 model Teachers {
   id Int @id @default(autoincrement())
   firstname String @db.VarChar(255)
   lastname  String @db.VarChar(255)
+  classes Classes[]
 }
 
 model Courses {
   id Int @id @default(autoincrement())
-  name String
+  name String @db.VarChar(255)
   credits Int
+  classes Classes[]
+}
+
+model Classes {
+  id Int @id @default(autoincrement())
+  course Courses @relation(fields: [courseId], references: [id])
+  courseId Int
+  semester Semesters @relation(fields: [semesterId], references: [id])
+  semesterId Int
+  schedule String @db.VarChar(255)
+  teacher Teachers @relation(fields: [teacherId], references: [id])
+  teacherId Int
 }

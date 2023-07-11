@@ -111,6 +111,30 @@ async function main() {
         }
     }
 
+    //make classes
+    for (let i = 0; i < 40; i++) {
+        await prisma.classes.create({
+            data: {
+                course: {
+                    connect: {
+                        id: Math.floor(Math.random() * 40) + 1
+                    }
+                },
+                semester: {
+                    connect: {
+                        id: Math.floor(Math.random() * 12) + 1
+                    }
+                },
+                schedule: i % 2 === 0 ? "Mon Wed Fri" : "Tue Thurs",
+                teacher: {
+                    connect: {
+                        id: Math.floor(Math.random() * 10) + 1
+                    }
+                }
+            }
+        })
+    }
+
     //makes users
     for (let i = 0; i < 100; i++) {
         await prisma.users.create({
