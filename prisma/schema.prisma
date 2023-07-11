@@ -10,11 +10,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  user_id Int @id @default(autoincrement())
-  user_username String @db.VarChar(255) @unique
-  user_email String @db.VarChar(255) @unique
-  user_password String @db.VarChar(255)
-  user_firstname String @db.VarChar(255)
-  user_lastname String @db.VarChar(255)
+model Users {
+  id        Int    @id @default(autoincrement())
+  username  String @unique @db.VarChar(255)
+  email     String @unique @db.VarChar(255)
+  password  String @db.VarChar(255)
+  firstname String @db.VarChar(255)
+  lastname  String @db.VarChar(255)
+  school    Schools @relation(fields: [schoolId], references: [id])
+  schoolId  Int
+}
+
+model Schools {
+  id       Int     @id @default(autoincrement())
+  name     String @unique
+  students Users[]
+}
+
+model Campus {
+  id Int @id @default(autoincrement())
+  name String
+}
+
+model Degrees {
+  id Int @id @default(autoincrement())
+  name String
 }

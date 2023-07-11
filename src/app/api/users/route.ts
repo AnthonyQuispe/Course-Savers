@@ -16,25 +16,28 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ data: newUser }, { status: 201 })
 }
 
-export async function PUT(request: Request) {
-    const { body: data } = await request.json();
-    const updateUser = await prisma.users.update({
-        where: { user_username: data.user_username },
-        data: {
-            // Provide the properties to update and their new values
-            user_email: data.user_email,
-        },
-    });
+// export async function PUT(request: NextRequest) {
+//     const { body: data } = await request.json();
+//     const updateUser = await prisma.users.update({
+//         where: { user_username: data.user_username },
+//         data: {
+//             // Provide the properties to update and their new values
+//             user_email: data.user_email,
+//         },
+//     });
 
-    return NextResponse.json({ data: updateUser });
-}
+//     return NextResponse.json({ data: updateUser });
+// }
 
-export async function DELETE(request: Request) {
-    const { body : data } = await request.json();
+export async function DELETE(request: NextRequest) {
 
-    const deleteUser = await prisma.users.delete({
-        where: { user_username : data.user_username },
-    });
+    const { query } = await request.json()
 
-    return NextResponse.json({ data: deleteUser},{ status: 200 });
+    console.log(query)
+
+    /* const deleteUser = await prisma.users.delete({
+        where: { user_username: query.user_username },
+    }); */
+
+    // return NextResponse.json({ data: deleteUser }, { status: 200 });
 }
