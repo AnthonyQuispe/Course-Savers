@@ -36,49 +36,7 @@ module.exports = {
         tablet: "768px",
         desktop: "1024px",
       },
-      fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
-      },
-    },
-    fontFace: {
-      Poppins: [
-        {
-          fontFamily: "Poppins",
-          fontStyle: "normal",
-          fontWeight: "400",
-          fontDisplay: "swap",
-          src: 'url("../../../public/font/Poppins-Regular.ttf") format("truetype")',
-        },
-        {
-          fontFamily: "Poppins",
-          fontStyle: "normal",
-          fontWeight: "600",
-          fontDisplay: "swap",
-          src: 'url("../../../public/font/Poppins-SemiBold.ttf") format("truetype")',
-        },
-        {
-          fontFamily: "Poppins",
-          fontStyle: "normal",
-          fontWeight: "100",
-          fontDisplay: "swap",
-          src: 'url("../../../public/font/Poppins-Thin.ttf") format("truetype")',
-        },
-        {
-          fontFamily: "Poppins",
-          fontStyle: "normal",
-          fontWeight: "700",
-          fontDisplay: "swap",
-          src: 'url("../../../public/font/Poppins-Bold.ttf") format("truetype")',
-        },
-        {
-          fontFamily: "Poppins",
-          fontStyle: "normal",
-          fontWeight: "500",
-          fontDisplay: "swap",
-          src: 'url("../../../public/font/Poppins-Medium.ttf") format("truetype")',
-        },
-      ],
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [],
 };
