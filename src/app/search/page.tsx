@@ -1,4 +1,4 @@
-import "./search.scss";
+// import "./search.scss";
 import Image from "next/image";
 import academicMap from "../../../public/Academic_Map.svg";
 import searchIcon from "../../../public/SearchIcon.svg";
