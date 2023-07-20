@@ -6,82 +6,82 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Users {
-  id        Int    @id @default(autoincrement())
-  username  String @unique @db.VarChar(255)
-  email     String @unique @db.VarChar(255)
-  password  String @db.VarChar(255)
-  firstname String @db.VarChar(255)
-  lastname  String @db.VarChar(255)
+  id        String  @id @default(uuid())
+  email     String  @unique @db.VarChar(255)
+  password  String  @db.VarChar(255)
+  firstname String  @db.VarChar(255)
+  lastname  String  @db.VarChar(255)
   school    Schools @relation(fields: [schoolId], references: [id])
   schoolId  Int
 }
 
 model Schools {
   id       Int     @id @default(autoincrement())
-  name     String @unique
+  name     String  @unique
   students Users[]
 }
 
 model Campus {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  degrees Degrees[]
+  id        Int         @id @default(autoincrement())
+  name      String      @db.VarChar(255)
+  degrees   Degrees[]
   buildings Buildings[]
-  semester Semesters[]
+  semester  Semesters[]
 }
 
 model Degrees {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  campus Campus @relation(fields: [campusId], references: [id])
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  campus   Campus @relation(fields: [campusId], references: [id])
   campusId Int
-  credits Int
+  credits  Int
 }
 
 model Buildings {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  campus Campus @relation(fields: [campusId], references: [id])
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  campus   Campus @relation(fields: [campusId], references: [id])
   campusId Int
 }
 
 model Semesters {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  campus Campus @relation(fields: [campusId], references: [id])
-  campusId Int
-  year Int
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  campus    Campus    @relation(fields: [campusId], references: [id])
+  campusId  Int
+  year      Int
   startDate DateTime
-  endDate DateTime
-  classes Classes[]
+  endDate   DateTime
+  classes   Classes[]
 }
 
 model Teachers {
-  id Int @id @default(autoincrement())
-  firstname String @db.VarChar(255)
-  lastname  String @db.VarChar(255)
-  classes Classes[]
+  id        Int       @id @default(autoincrement())
+  firstname String    @db.VarChar(255)
+  lastname  String    @db.VarChar(255)
+  classes   Classes[]
 }
 
 model Courses {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(255)
   credits Int
   classes Classes[]
 }
 
 model Classes {
-  id Int @id @default(autoincrement())
-  course Courses @relation(fields: [courseId], references: [id])
-  courseId Int
-  semester Semesters @relation(fields: [semesterId], references: [id])
+  id         Int       @id @default(autoincrement())
+  course     Courses   @relation(fields: [courseId], references: [id])
+  courseId   Int
+  semester   Semesters @relation(fields: [semesterId], references: [id])
   semesterId Int
-  schedule String @db.VarChar(255)
-  teacher Teachers @relation(fields: [teacherId], references: [id])
-  teacherId Int
+  schedule   String    @db.VarChar(255)
+  teacher    Teachers  @relation(fields: [teacherId], references: [id])
+  teacherId  Int
 }

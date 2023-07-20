@@ -136,22 +136,21 @@ async function main() {
     }
 
     //makes users
-    for (let i = 0; i < 100; i++) {
-        await prisma.users.create({
-            data: {
-                username: faker.internet.userName(),
-                email: faker.internet.email(),
-                password: faker.internet.password(),
-                firstname: faker.person.firstName(),
-                lastname: faker.person.lastName(),
-                school: {
-                    connect: {
-                        id: Math.floor(Math.random() * 4) + 1,
-                    },
-                },
-            },
-        });
-    }
+    // for (let i = 0; i < 100; i++) {
+    //     await prisma.users.create({
+    //         data: {
+    //             email: faker.internet.email(),
+    //             password: faker.internet.password(),
+    //             firstname: faker.person.firstName(),
+    //             lastname: faker.person.lastName(),
+    //             school: {
+    //                 connect: {
+    //                     id: Math.floor(Math.random() * 4) + 1,
+    //                 },
+    //             },
+    //         },
+    //     });
+    // }
 }
 
 main().catch(e => {
