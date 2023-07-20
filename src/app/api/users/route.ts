@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
     const { body: data } = await request.json();
     const updateUser = await prisma.users.update({
-        where: { username: data.username },
+        where: { email: data.email },
         data: {
             email: data.email,
         },
