@@ -1,22 +1,10 @@
-import { NextResponse, NextRequest } from "next/server";
+import { authMiddleware } from "@clerk/nextjs";
 
-export function middleware(request : NextRequest) {
-    const origin = request.headers.get('origin');
-    console.log(origin)
-
-    const response = NextResponse.next();
-    response.headers.set("Access-Control-Allow-Origin", "*");
-    response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    response.headers.set("Access-Control-Max-Age", "86400")
-
-    console.log('Middleware');
-    console.log(request.method);
-    console.log(request.url);
-
-    return response;
-}
+// This example protects all routes including api/trpc routes
+// Please edit this to allow other routes to be public as needed.
+// See https://clerk.com/docs/nextjs/middleware for more information about configuring your middleware
+export default authMiddleware({});
 
 export const config = {
-    matcher: 'api/:path*',
-}
+    matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+};
