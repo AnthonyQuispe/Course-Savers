@@ -9,13 +9,13 @@ export default function Home() {
     <Link href="/search">
       <main className="relative flex justify-center items-center h-screen	">
         <video
-          width="100vw"
-          height="100vh"
-          className="w-screen h-screen object-cover"
           autoPlay
           muted
           loop
           playsInline
+          width="100vw"
+          height="100vh"
+          className="w-screen h-screen object-cover"
         >
           <source src="videos/Course-Saver-Background.mp4" type="video/mp4" />
           Your browser does not support the video tag.
