@@ -2,6 +2,7 @@ import Image from "next/image";
 import academicMap from "../../../public/Academic_Map.svg";
 import searchIcon from "../../../public/SearchIcon.svg";
 import bookmarkIcon from "../../../public/Bookmark Component.svg";
+import NavComponent from "../../components/navComponent/page";
 
 export default function Home() {
   return (
@@ -61,6 +62,7 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <NavComponent />
     </main>
   );
 }
