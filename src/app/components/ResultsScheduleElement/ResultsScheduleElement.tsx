@@ -1,7 +1,5 @@
-import { Carousel } from "react-responsive-carousel"
 
-
-const DayCard = ({ day }) => (
+const DayCard = ({ day }: { day: string }) => (
     <div className="flex flex-col mx-1 items-center justify-center min-w-[200px] h-44 bg-white rounded-2xl">
         <p className="text-4xl pb-3 text-DarkPurp">{day}</p>
         <p className="text-BlackText">---</p>
