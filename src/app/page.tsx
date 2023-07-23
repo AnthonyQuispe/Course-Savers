@@ -15,7 +15,7 @@ export default function Home() {
           playsInline
           width="100vw"
           height="100vh"
-          className="w-screen h-screen object-cover bg-white"
+          className="fixed w-screen h-screen object-cover bg-white"
         >
           <source src="videos/Course-Saver-Background.mp4" type="video/mp4" />
           Your browser does not support the video tag.
