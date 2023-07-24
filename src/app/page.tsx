@@ -3,7 +3,6 @@
 import Image from "next/image";
 import logo from "../../public/Logo.svg";
 import Link from "next/link";
-import backgroundVideo from "../../public/videos/Course-Saver-Background.mp4";
 
 export default function Home() {
   return (
