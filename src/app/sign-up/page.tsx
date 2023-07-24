@@ -51,8 +51,12 @@ export default function SignUp() {
         },
     })
 
-    function onSubmit(data: Input) {
+    //logs form when updated
+    // console.log(form.watch());
 
+    function onSubmit(data: Input) {
+        alert(JSON.stringify(data))
+        console.log(data)
     }
 
     return (
@@ -63,24 +67,113 @@ export default function SignUp() {
                         <CardTitle className="text-[#390A75] mb-4">Sign Up</CardTitle>
                     </CardHeader>
                     <CardContent className="p-0">
-                        <form>
-                            <div className="grid w-full items-center gap-4">
-                                <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="email">
-                                        <Input id="email" placeholder="Email Address" className="rounded bg-white text-black border-none" />
-                                    </Label>
-                                </div>
-                                <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="password" >
-                                        <Input id="password" placeholder="Password" className="rounded bg-white text-black border-none" />
-                                    </Label>
-                                </div>
-                            </div>
-                        </form>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                                <FormField
+                                    control={form.control}
+                                    name="firstName"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>First Name</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="First Name" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="lastName"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Last Name</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Last Name" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="school"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>School</FormLabel>
+                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Select your School" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent className="bg-[#390A75] text-white">
+                                                    <SelectItem value="Florida International Univeristy">Florida International Univeristy</SelectItem>
+                                                    <SelectItem value="Univeristy of Miami">Univeristy of Miami</SelectItem>
+                                                    <SelectItem value="Miami Dade College">Miami Dade College</SelectItem>
+                                                    <SelectItem value="University of Florida">University of Florida</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="studentId"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Student ID</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Student I.D." {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>School Email</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Email" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Password</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Password" {...field} type="password" />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="confirmPassword"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Confirm Password</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Confirm Password" {...field} type="password" />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button type="submit">Submit</Button>
+                            </form>
+                        </Form>
                     </CardContent>
-                    <CardFooter className="flex justify-center p-0 absolute bottom-4 left-[50%] right-[50%]">
-                        <Button className="bg-[#8541CB] rounded w-100 px-20">Submit</Button>
-                    </CardFooter>
                 </Card>
             </div>
         </div>
