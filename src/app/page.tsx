@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <Link href="/search">
+    <Link href="/sign-in">
       <main className="relative flex justify-center items-center h-screen	">
         <video
           width="100vw"
