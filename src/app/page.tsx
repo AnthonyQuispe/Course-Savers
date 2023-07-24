@@ -3,21 +3,24 @@
 import Image from "next/image";
 import logo from "../../public/Logo.svg";
 import Link from "next/link";
+import backgroundVideo from "../../public/videos/Course-Saver-Background.mp4";
 
 export default function Home() {
   return (
     <Link href="/search">
       <main className="relative flex justify-center items-center h-screen	">
         <video
-          autoPlay
-          muted
-          loop
-          playsInline
           width="100vw"
           height="100vh"
           className="w-screen h-screen object-cover"
+          preload="auto"
+          loop={true}
+          muted={true}
+          autoPlay={true}
+          playsInline={true}
         >
-          <source src="videos/Course-Saver-Background.mp4" type="video/mp4" />
+          <source src="/videos/Course-Saver-Background.mp4" type="video/mp4" />
+          <source src="/Course-Saver-Background.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-purple-700 bg-opacity-75"></div>
