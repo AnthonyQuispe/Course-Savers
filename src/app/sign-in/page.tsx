@@ -54,7 +54,7 @@ export default function SignIn() {
                             </div>
                         </form>
                     </CardContent>
-                    <Link href="/sign-up" className="text-[12px] text-center mt-4 underline underline-offset-4">Don't have an account? <span className="text-[#B1EBEF]">
+                    <Link href="/sign-up" className="text-[12px] text-center mt-4 underline underline-offset-4">Don&apos;t have an account? <span className="text-[#B1EBEF]">
                         Sign Up</span></Link>
                     <CardFooter className="flex justify-center p-0 absolute bottom-8 left-[50%] right-[50%]">
                         <Button className="bg-[#8541CB] rounded w-100 px-20">Submit</Button>
