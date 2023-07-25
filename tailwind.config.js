@@ -36,6 +36,9 @@ module.exports = {
         tablet: "768px",
         desktop: "1024px",
       },
+      backgroundImage: {
+        signInBg: "url('/public/signInBackground.png')"
+      }
     },
   },
   plugins: [],

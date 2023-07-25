@@ -15,7 +15,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        signIn: {
+          elements: {
+            formButtonPrimary: {
+              color: '#FFFFFF',
+              backgroundColor: '#8541CB'
+            },
+            headerTitle: 'text-center',
+            headerSubtitle: 'hidden',
+            footer: 'flex justify-center',
+            card: 'bg-[transparent] mb-0',
+            formFieldLabel: 'hidden',
+            formFieldInput: 'bg-[#F9F9F9]'
+          },
+          variables: {
+            
+          }
+        },
+        signUp: {
+          elements: {
+            formButtonPrimary: {
+              color: '#FFFFFF',
+              backgroundColor: '#8541CB'
+            },
+            headerTitle: 'text-center',
+            headerSubtitle: 'hidden',
+            footer: 'flex justify-center'
+          }
+        },
+      }}
+    >
       <html lang="en">
         <body className={inter.className}>{children}</body>
       </html>
