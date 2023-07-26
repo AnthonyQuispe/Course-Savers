@@ -3,6 +3,7 @@ import { z } from 'zod'
 export const registerSchema = z.object({
     email: z.string().email(),
     school: z.string(),
+    campus: z.string(),
     firstName: z.string().min(2, { message: "Enter a valid name, too short" }).max(100, { message: "Enter a valid name, too long" }),
     lastName: z.string().min(3, { message: "Enter a valid name, too short" }).max(100, { message: "Enter a valid name, too long" }),
     studentId: z.string()

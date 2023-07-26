@@ -45,14 +45,14 @@ async function main() {
     }
 
     //make semesters
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 16; i++) {
         for (let j = 0; j < semestersArr.length; j++) {
             await prisma.semesters.create({
                 data: {
                     name: semestersArr[j].semesterName,
                     campus: {
                         connect: {
-                            id: j + 1,
+                            id: i + 1,
                         },
                     },
                     year: 2023,
@@ -64,83 +64,86 @@ async function main() {
     }
 
     // //makes degrees
-    // for (let i = 0; i < 4; i++) {
-    //     for (let j = 0; j < degreesArr.length; j++) {
-    //         await prisma.degrees.create({
-    //             data: {
-    //                 name: degreesArr[j],
-    //                 credits: j < 2 ? 60 : 120,
-    //                 campus: {
-    //                     connect: {
-    //                         id: j + 1
-    //                     }
-    //                 },
-    //             }
-    //         });
-    //     }
-    // }
+    for (let i = 0; i < 16; i++) {
+        for (let j = 0; j < degreesArr.length; j++) {
+            await prisma.degrees.create({
+                data: {
+                    name: degreesArr[j],
+                    credits: j < 2 ? 60 : 120,
+                    campus: {
+                        connect: {
+                            id: i + 1
+                        }
+                    },
+                }
+            });
+        }
+    }
 
     // //makes buildings
-    // for (let i = 0; i < 4; i++) {
-    //     for (let j = 0; j < campusArr.length; j++) {
-    //         await prisma.buildings.create({
-    //             data: {
-    //                 name: `${faker.location.city()} Building `,
-    //                 campus: {
-    //                     connect: {
-    //                         id: j + 1
-    //                     }
-    //                 },
-    //             }
-    //         });
-    //     }
-    // }
+    for (let i = 0; i < 16; i++) {
+        for (let j = 0; j < campusArr.length; j++) {
+            await prisma.buildings.create({
+                data: {
+                    name: `${faker.location.city()} Building `,
+                    campus: {
+                        connect: {
+                            id: i + 1
+                        }
+                    },
+                }
+            });
+        }
+    }
 
-    // // make teachers
-    // for (let i = 0; i < 10; i++) {
-    //     await prisma.teachers.create({
-    //         data: {
-    //             firstname: faker.person.firstName(),
-    //             lastname: faker.person.lastName(),
-    //         }
-    //     })
-    // }
+    // make teachers
+    for (let i = 0; i < 10; i++) {
+        await prisma.teachers.create({
+            data: {
+                firstname: faker.person.firstName(),
+                lastname: faker.person.lastName(),
+            }
+        })
+    }
 
-    // //make courses
-    // for (let i = 0; i < 4; i++) {
-    //     for (let j = 0; j < coursesArr.length; j++) {
-    //         await prisma.courses.create({
-    //             data: {
-    //                 name: `${coursesArr[j]} ${j+1}0${i+1}`,
-    //                 credits: 3
-    //             },
-    //         });
-    //     }
-    // }
+    //make courses
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < coursesArr.length; j++) {
+            await prisma.courses.create({
+                data: {
+                    name: `${coursesArr[j]} ${j + 1}0${i + 1}`,
+                    credits: 3
+                },
+            });
+        }
+    }
 
-    // //make classes
-    // for (let i = 0; i < 40; i++) {
-    //     await prisma.classes.create({
-    //         data: {
-    //             course: {
-    //                 connect: {
-    //                     id: Math.floor(Math.random() * 40) + 1
-    //                 }
-    //             },
-    //             semester: {
-    //                 connect: {
-    //                     id: Math.floor(Math.random() * 12) + 1
-    //                 }
-    //             },
-    //             schedule: i % 2 === 0 ? "Mon Wed Fri" : "Tue Thurs",
-    //             teacher: {
-    //                 connect: {
-    //                     id: Math.floor(Math.random() * 10) + 1
-    //                 }
-    //             }
-    //         }
-    //     })
-    // }
+    //make classes
+
+    for (let h = 0; h < 48; h++) {
+        for (let i = 0; i < 20; i++) {
+            await prisma.classes.create({
+                data: {
+                    course: {
+                        connect: {
+                            id: Math.floor(Math.random() * 20) + 1
+                        }
+                    },
+                    semester: {
+                        connect: {
+                            id: /* Math.floor(Math.random() * 48) + 1 */ h + 1
+                        }
+                    },
+                    schedule: i % 2 === 0 ? "Mon Wed Fri" : "Tue Thurs",
+                    teacher: {
+                        connect: {
+                            id: Math.floor(Math.random() * 10) + 1
+                        }
+                    }
+                }
+            })
+        }
+    }
 
     // //makes users
     // for (let i = 0; i < 100; i++) {

@@ -11,15 +11,16 @@ datasource db {
 }
 
 model Users {
-  id        String   @id @default(cuid())
-  firstName String
-  lastName  String
-  school    String
-  studentId String
-  email     String   @unique
-  password  String
-  Schools   Schools? @relation(fields: [schoolsId], references: [id])
-  schoolsId String?
+  id          String  @id @default(cuid())
+  firstName   String
+  lastName    String
+  school      Schools @relation(fields: [schoolsName], references: [name])
+  schoolsName String
+  campus      Campus  @relation(fields: [campusId], references: [id])
+  campusId    Int
+  studentId   String
+  email       String  @unique
+  password    String
 }
 
 model Schools {
@@ -36,16 +37,19 @@ model Campus {
   school     Schools     @relation(fields: [schoolName], references: [name])
   schoolName String
   degrees    Degrees[]
+  users      Users[]
+  buildings  Buildings[]
 }
 
 model Semesters {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  campus    Campus   @relation(fields: [campusId], references: [id])
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  campus    Campus    @relation(fields: [campusId], references: [id])
   campusId  Int
   year      Int
   startDate DateTime
   endDate   DateTime
+  Classes   Classes[]
 }
 
 model Degrees {
@@ -54,4 +58,36 @@ model Degrees {
   campus   Campus @relation(fields: [campusId], references: [id])
   campusId Int
   credits  Int
+}
+
+model Buildings {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  campus   Campus @relation(fields: [campusId], references: [id])
+  campusId Int
+}
+
+model Courses {
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(255)
+  credits Int
+  classes Classes[]
+}
+
+model Classes {
+  id         Int       @id @default(autoincrement())
+  course     Courses   @relation(fields: [courseId], references: [id])
+  courseId   Int
+  semester   Semesters @relation(fields: [semesterId], references: [id])
+  semesterId Int
+  schedule   String    @db.VarChar(255)
+  teacher    Teachers  @relation(fields: [teacherId], references: [id])
+  teacherId  Int
+}
+
+model Teachers {
+  id        Int       @id @default(autoincrement())
+  firstname String    @db.VarChar(255)
+  lastname  String    @db.VarChar(255)
+  classes   Classes[]
 }

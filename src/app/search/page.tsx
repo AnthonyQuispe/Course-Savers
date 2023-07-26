@@ -8,26 +8,66 @@ import NavComponent from "../../components/navComponent/page";
 
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+
+type Semester = {
+  id: number,
+  name: string,
+  campusId: number,
+  year: number,
+  startDate: string,
+  endDate: string,
+}
+
+async function getTerms(userData: string) {
+  const termsArr = await fetch(`/api/terms?email=${userData}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+
+  return termsArr.json()
+}
 
 export default async function Home() {
 
+
+
   const router = useRouter()
-  const newSession = await useSession();
+  const newSession = useSession();
   const { data: session, status } = newSession
 
-  console.log(newSession)
+  // console.log(newSession)
 
   if (status == "loading") {
     console.log('loading')
   } else if (session) {
     console.log('session is good to go')
+    console.log(session.user?.email)
   } else if (!session) {
     console.log('no session');
   }
 
-  if(!session) {
+  if (!session) {
     router.push('/sign-in')
   }
+
+  // const termArr = await getTerms(session?.user?.email!);
+
+  // useEffect(() => {
+  //   async function fetchTerms() {
+  //     try {
+  //       const terms = await getTerms(session?.user?.email!)
+  //       setTermArr(terms.data);
+  //     } catch (error) {
+  //       console.error("Error fetching schools:", error);
+  //       // Handle the error, e.g., show a user-friendly message or retry the fetch
+  //     }
+  //   }
+
+  //   fetchTerms();
+  // }, []);
 
   return (
     <main className="search bg-BG_Color w-screen h-screen flex items-center justify-center">
@@ -53,6 +93,10 @@ export default async function Home() {
           <label className="search__label text-BlackText">Term</label>
           <select className=" h-14 search__dropdown w-73vw  text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	">
             <option value="">Select</option>
+            {/* {termArr ? termArr.map((semester: Semester) => {
+              <option value={semester.id}>{semester.name}</option>
+            }) :
+              <option value="">Loading...</option>} */}
             <option value="Fall">Fall</option>
             <option value="Spring">Spring</option>
             <option value="Summer">Summer</option>

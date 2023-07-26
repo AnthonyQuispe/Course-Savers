@@ -33,7 +33,7 @@ import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import Router, { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 //puts a type to the input object from registerSchema
 type Input = z.infer<typeof registerSchema>;
@@ -44,10 +44,20 @@ interface School {
     // Add other properties as needed
 }
 
+interface Campus {
+    id: string;
+    name: string;
+    schoolName: string;
+    // Add other properties as needed
+}
+
 export default function SignUp() {
 
     const router = useRouter();
     const [schoolArray, setSchoolArray] = useState<School[]>([]);
+    const [campusArr, setCampusArr] = useState<Campus[]>([])
+
+    const schoolPicked = useRef()
 
     //useForm is expecting Input type
     const form = useForm<Input>({
@@ -66,6 +76,7 @@ export default function SignUp() {
     // console.log(form.watch());
 
     async function onSubmit(data: Input) {
+        console.log(data)
         const response = await fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -93,10 +104,10 @@ export default function SignUp() {
         async function fetchSchools() {
             try {
                 const schools = await getSchools();
-                setSchoolArray(schools.data);
+                setSchoolArray(schools.data.schoolArr);
+                setCampusArr(schools.data.campusArr)
             } catch (error) {
                 console.error("Error fetching schools:", error);
-                // Handle the error, e.g., show a user-friendly message or retry the fetch
             }
         }
 
@@ -164,6 +175,34 @@ export default function SignUp() {
                                                     ))
                                                 ) : (
                                                     <SelectItem value="Loading schools..." />
+                                                )}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="campus"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Campus</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger className="bg-[#F3F3F3] rounded border-0">
+                                                    <SelectValue placeholder="Select your Campus" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent className="bg-[#F3F3F3] rounded border-0">
+                                                {campusArr.length > 0 ? (
+                                                    campusArr.map((campus) => (
+                                                        <SelectItem key={campus.id} value={campus.id}>
+                                                            {campus.name + " " + campus.schoolName}
+                                                        </SelectItem>
+                                                    ))
+                                                ) : (
+                                                    <SelectItem value="Loading campus..." />
                                                 )}
                                             </SelectContent>
                                         </Select>

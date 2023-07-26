@@ -6,10 +6,11 @@ const prisma = new PrismaClient();
 
 export async function POST(request) {
     const body = await request.json();
-    const { firstName, lastName, studentId, email, password, school, confirmPassword } = body.data;
-    
+    console.log(body)
+    const { firstName, lastName, studentId, email, password, school, confirmPassword, campus } = body.data;
 
-    if (!firstName || !lastName || !school || !studentId || !email || !password || !confirmPassword) {
+
+    if (!firstName || !lastName || !school || !studentId || !email || !password || !confirmPassword || !campus) {
         return new NextResponse(400, { error: "Missing information" })
     }
 
@@ -28,10 +29,19 @@ export async function POST(request) {
         data: {
             firstName: firstName,
             lastName: lastName,
-            school: school,
+            school: {
+                connect: {
+                    name: school
+                }
+            },
+            campus: {
+                connect: {
+                    id: Number(campus)
+                }
+            },
             studentId: studentId,
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
         }
     })
 
