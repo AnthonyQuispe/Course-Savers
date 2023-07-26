@@ -14,7 +14,7 @@ model Users {
   id  String @id @default(cuid())
   firstName String
   lastName String
-  School String
+  school String
   studentId String
   email String @unique
   password String

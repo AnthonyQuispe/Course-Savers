@@ -70,7 +70,7 @@ export default function SignUp() {
         })
 
         const userInfo = await response.json()
-        // router.push('/sign-in')
+        router.push('/sign-in')
     }
 
     return (

@@ -6,9 +6,6 @@ import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient()
 
-// type CredentialsType = {
-//     name: string,
-// }
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
@@ -20,7 +17,30 @@ export const authOptions = {
                 password: { label: "password", type: "password" }
             },
             async authorize(credentials) {
+                //check to see if email and password is valid
+                //if no email or password
+                if (!credentials.email || !credentials.password) {
+                    return null;
+                }
+                //check to see if user exists
+                const user = await prisma.users.findUnique({
+                    where: { email: credentials.email }
+                })
+                //if user doesn't exist
+                if (!user) {
+                    return null;
+                }
+                //check if password matches username
+                // const passwordsMatch = await bcrypt.compare(credentials.password, user.password);
 
+                //if password doesn't match
+                if (user.password !== credentials.password) {
+                    console.log('theres an error')
+                    return null;
+                }
+
+                //return user object
+                return user;
             }
         })
     ],

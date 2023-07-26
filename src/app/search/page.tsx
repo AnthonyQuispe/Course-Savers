@@ -1,10 +1,29 @@
+'use client'
+
 import Image from "next/image";
 import academicMap from "../../../public/Academic_Map.svg";
 import searchIcon from "../../../public/SearchIcon.svg";
 import bookmarkIcon from "../../../public/Bookmark Component.svg";
 import NavComponent from "../../components/navComponent/page";
 
-export default function Home() {
+import { useSession } from "next-auth/react"
+
+export default async function Home() {
+
+  const newSession = await useSession();
+  const { data: session, status } = newSession
+
+  console.log(newSession)
+
+  if (status == "loading") {
+    console.log('loading')
+  } else if (session) {
+    console.log('session is good to go')
+  } else if (!session) {
+    console.log('no session');
+
+  }
+
   return (
     <main className="search bg-BG_Color w-screen h-screen flex items-center justify-center">
       <div className="search__bookmark absolute top-2 right-8 text-DarkPurp flex items-center justify-center flex-col">

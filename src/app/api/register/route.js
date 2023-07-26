@@ -6,10 +6,10 @@ const prisma = new PrismaClient();
 
 export async function POST(request) {
     const body = await request.json();
-    const { firstName, lastName, studentId, email, password, school } = body;
-    console.log(body)
+    const { firstName, lastName, studentId, email, password, school, confirmPassword } = body.data;
+    
 
-    if (!firstName || lastName || school || studentId || email || password) {
+    if (!firstName || !lastName || !school || !studentId || !email || !password || !confirmPassword) {
         return new NextResponse(400, { error: "Missing information" })
     }
 
@@ -21,20 +21,18 @@ export async function POST(request) {
         return new NextResponse("User already exists", { status: 400 });
     }
 
-    const hashedPassword = await bcrypt.has(password, 10)
+    // const hashedPassword = await bcrypt.hash(password, 10)
 
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
         data: {
             firstName: firstName,
             lastName: lastName,
             school: school,
             studentId: studentId,
             email: email,
-            password: hashedPassword
+            password: password
         }
     })
-
-    console.log(user)
 
     return NextResponse.json(user)
 }
