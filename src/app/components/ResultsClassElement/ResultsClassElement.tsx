@@ -15,7 +15,7 @@ const CourseItem = ({ opacity }: {opacity: string}) => {
                 <div className="flex justify-between items-center">
                     <div className="flex items-center">
                         <h2 className="text-xl font-semibold">NURS 101</h2>
-                        <Image onClick={() => setShowDetails(!showDetails)} src={downArrowIcon} alt="toggle details arrow" />
+                        <Image onClick={() => setShowDetails(!showDetails)} src={!showDetails ? downArrowIcon : upArrowIcon} alt="toggle details arrow" />
                     </div>
                     <div className="flex items-center">
                         <Image className="w-5 h-5" src={infoIcon} alt="more info button" />
