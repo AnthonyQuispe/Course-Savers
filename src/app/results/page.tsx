@@ -6,7 +6,8 @@ import ResultsClassElement from "../components/ResultsClassElement/ResultsClassE
 
 
 export default function Results() {
-    return <div className="pt-[44px]">
+    return (
+    <div className="pt-[44px]">
         <div className="flex justify-between px-3">
             <Image src={backButtonIcon} alt="back button"/>
             <Image src={filterIcon} alt="filter button"/>
@@ -20,9 +21,10 @@ export default function Results() {
                 <h2 className=" text-DarkPurp text-xl font-extrabold pt-10 pb-3">SELECT CLASSES</h2>
                 <p>Results for: </p><span></span>
             </div>
-            <div>
+            <section>
                 <ResultsClassElement />
-            </div>
+            </section>
         </div>
     </div>
+    )
 }
