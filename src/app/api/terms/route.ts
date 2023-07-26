@@ -16,7 +16,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
             }
         })
         console.log(user)
-        const termArr = await prisma.semesters.findMany()
+        const termArr = await prisma.semesters.findMany({
+            where: {
+                campusId: user?.campusId
+            }
+        })
         return NextResponse.json({ data: termArr });
     } catch (error) {
         console.error("Error occurred:", error)
