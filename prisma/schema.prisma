@@ -11,11 +11,19 @@ datasource db {
 }
 
 model Users {
-  id  String @id @default(cuid())
+  id        String   @id @default(cuid())
   firstName String
-  lastName String
-  school String
+  lastName  String
+  school    String
   studentId String
-  email String @unique
-  password String
+  email     String   @unique
+  password  String
+  Schools   Schools? @relation(fields: [schoolsId], references: [id])
+  schoolsId String?
+}
+
+model Schools {
+  id       String  @id @default(cuid())
+  name     String  @unique
+  students Users[]
 }

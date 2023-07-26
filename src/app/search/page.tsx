@@ -7,9 +7,11 @@ import bookmarkIcon from "../../../public/Bookmark Component.svg";
 import NavComponent from "../../components/navComponent/page";
 
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation";
 
 export default async function Home() {
 
+  const router = useRouter()
   const newSession = await useSession();
   const { data: session, status } = newSession
 
@@ -21,7 +23,10 @@ export default async function Home() {
     console.log('session is good to go')
   } else if (!session) {
     console.log('no session');
+  }
 
+  if(!session) {
+    router.push('/sign-in')
   }
 
   return (

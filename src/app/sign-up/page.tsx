@@ -32,17 +32,22 @@ import { registerSchema } from "@/validators/auth"
 import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import Link from "next/link"
 import Router, { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 //puts a type to the input object from registerSchema
 type Input = z.infer<typeof registerSchema>;
 
-
+interface School {
+    id: string;
+    name: string;
+    // Add other properties as needed
+}
 
 export default function SignUp() {
 
     const router = useRouter();
+    const [schoolArray, setSchoolArray] = useState<School[]>([]);
 
     //useForm is expecting Input type
     const form = useForm<Input>({
@@ -66,12 +71,41 @@ export default function SignUp() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({data})
+            body: JSON.stringify({ data })
         })
 
         const userInfo = await response.json()
         router.push('/sign-in')
     }
+
+    async function getSchools() {
+        const schoolArr = await fetch('/api/schools', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        return schoolArr.json()
+    }
+
+    useEffect(() => {
+        async function fetchSchools() {
+            try {
+                const schools = await getSchools();
+                setSchoolArray(schools.data);
+            } catch (error) {
+                console.error("Error fetching schools:", error);
+                // Handle the error, e.g., show a user-friendly message or retry the fetch
+            }
+        }
+
+        fetchSchools();
+    }, []);
+
+    useEffect(() => {
+        console.log(schoolArray)
+    }, [schoolArray])
 
     return (
         <div className="w-[100dvw] h-[100dvh] max-h-[100dvh] bg-[white] text-black flex justify-center">
@@ -122,10 +156,15 @@ export default function SignUp() {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent className="bg-[#F3F3F3] rounded border-0">
-                                                <SelectItem value="Florida International Univeristy">Florida International Univeristy</SelectItem>
-                                                <SelectItem value="Univeristy of Miami">Univeristy of Miami</SelectItem>
-                                                <SelectItem value="Miami Dade College">Miami Dade College</SelectItem>
-                                                <SelectItem value="University of Florida">University of Florida</SelectItem>
+                                                {schoolArray.length > 0 ? (
+                                                    schoolArray.map((school) => (
+                                                        <SelectItem key={school.id} value={school.name}>
+                                                            {school.name}
+                                                        </SelectItem>
+                                                    ))
+                                                ) : (
+                                                    <SelectItem value="Loading schools..." />
+                                                )}
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />

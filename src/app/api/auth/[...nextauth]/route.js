@@ -31,11 +31,13 @@ export const authOptions = {
                     return null;
                 }
                 //check if password matches username
-                // const passwordsMatch = await bcrypt.compare(credentials.password, user.password);
+                const passwordsMatch = await bcrypt.compare(credentials.password, user.password);
 
                 //if password doesn't match
-                if (user.password !== credentials.password) {
-                    console.log('theres an error')
+                if (!passwordsMatch) {
+                    console.log(credentials.password)
+                    console.log(user.password)
+                    console.log('passwords do not match')
                     return null;
                 }
 
