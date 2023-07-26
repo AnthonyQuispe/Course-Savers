@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'login-background': "url('/LoginBackground.png')",
+      },
       colors: {
         White: "#ffffff",
         BG_Color: "#fcfcfc",

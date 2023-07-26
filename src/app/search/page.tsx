@@ -2,6 +2,7 @@ import Image from "next/image";
 import academicMap from "../../../public/Academic_Map.svg";
 import searchIcon from "../../../public/SearchIcon.svg";
 import bookmarkIcon from "../../../public/Bookmark Component.svg";
+import NavComponent from "../../components/navComponent/page";
 
 export default function Home() {
   return (
@@ -11,9 +12,9 @@ export default function Home() {
         <p>Saves</p>
       </div>
 
-      <div className="rounded-3xl search-container flex flex-col justify-evenly items-center absolute top-160 rounded-25 w-11/12 h-3/6 shadow-md bg-BG_Color">
-        <div className="search-container__top w-full flex justify-evenly items-end px-4">
-          <h1 className="search__heading text-DarkPurp text-screen-titles font-bold text-2xl">
+      <div className="max-w-[18.75rem] rounded-3xl flex flex-col justify-evenly items-center absolute top-160 rounded-25 w-11/12 h-3/6 shadow-md bg-BG_Color ">
+        <div className=" w-full flex justify-evenly items-end px-4">
+          <h1 className=" text-DarkPurp text-screen-titles font-bold text-2xl">
             QUICK SEARCH
           </h1>
           <Image
@@ -61,6 +62,7 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <NavComponent />
     </main>
   );
 }
