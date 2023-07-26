@@ -28,14 +28,40 @@ async function main() {
         });
     }
 
-    //makes campuses
-    // for (let i = 0; i < campusArr.length; i++) {
-    //     await prisma.campus.create({
-    //         data: {
-    //             name: campusArr[i],
-    //         },
-    //     });
-    // }
+    // makes campuses
+    for (let j = 0; j < campusArr.length; j++) {
+        for (let i = 0; i < campusArr.length; i++) {
+            await prisma.campus.create({
+                data: {
+                    name: campusArr[i],
+                    school: {
+                        connect: {
+                            name: schoolsArr[j],
+                        },
+                    },
+                },
+            });
+        }
+    }
+
+    //make semesters
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < semestersArr.length; j++) {
+            await prisma.semesters.create({
+                data: {
+                    name: semestersArr[j].semesterName,
+                    campus: {
+                        connect: {
+                            id: j + 1,
+                        },
+                    },
+                    year: 2023,
+                    startDate: semestersArr[j].startDate,
+                    endDate: semestersArr[j].endDate,
+                },
+            });
+        }
+    }
 
     // //makes degrees
     // for (let i = 0; i < 4; i++) {
@@ -66,25 +92,6 @@ async function main() {
     //                     }
     //                 },
     //             }
-    //         });
-    //     }
-    // }
-
-    // //make semesters
-    // for (let i = 0; i < 4; i++) {
-    //     for (let j = 0; j < semestersArr.length; j++) {
-    //         await prisma.semesters.create({
-    //             data: {
-    //                 name: semestersArr[j].semesterName,
-    //                 campus: {
-    //                     connect: {
-    //                         id: j + 1,
-    //                     },
-    //                 },
-    //                 year: 2023,
-    //                 startDate: semestersArr[j].startDate,
-    //                 endDate: semestersArr[j].endDate,
-    //             },
     //         });
     //     }
     // }

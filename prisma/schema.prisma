@@ -23,7 +23,35 @@ model Users {
 }
 
 model Schools {
-  id       String  @id @default(cuid())
-  name     String  @unique
+  id       String   @id @default(cuid())
+  name     String   @unique
   students Users[]
+  campus   Campus[]
+}
+
+model Campus {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(255)
+  semester   Semesters[]
+  school     Schools     @relation(fields: [schoolName], references: [name])
+  schoolName String
+  degrees    Degrees[]
+}
+
+model Semesters {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  campus    Campus   @relation(fields: [campusId], references: [id])
+  campusId  Int
+  year      Int
+  startDate DateTime
+  endDate   DateTime
+}
+
+model Degrees {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  campus   Campus @relation(fields: [campusId], references: [id])
+  campusId Int
+  credits  Int
 }
