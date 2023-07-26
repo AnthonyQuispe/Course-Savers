@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 export async function GET(req: NextRequest, res: NextResponse) {
     try {
         const reqEmail = req.nextUrl.searchParams.get('email')
-        console.log(reqEmail)
+        // console.log(reqEmail)
         if (reqEmail === null) {
             // Handle the case when 'email' parameter is not present in the URL
             return NextResponse.json({ error: "Email parameter not provided" }, { status: 400 });
@@ -15,7 +15,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
                 email: reqEmail
             }
         })
-        console.log(user)
+        // console.log(user)
         const termArr = await prisma.semesters.findMany({
             where: {
                 campusId: user?.campusId

@@ -20,19 +20,17 @@ type Semester = {
 }
 
 async function getTerms(userData: string) {
-  const termsArr = await fetch(`/api/terms?email=${userData}`, {
+  const termsArrReq = await fetch(`/api/terms?email=${userData}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
   })
-
-  return termsArr.json()
+  return termsArrReq.json()
 }
 
+
 export default async function Home() {
-
-
 
   const router = useRouter()
   const newSession = useSession();
@@ -40,34 +38,39 @@ export default async function Home() {
 
   // console.log(newSession)
 
-  if (status == "loading") {
-    console.log('loading')
-  } else if (session) {
-    console.log('session is good to go')
-    console.log(session.user?.email)
-  } else if (!session) {
-    console.log('no session');
-  }
+  // if (status == "loading") {
+  //   console.log('loading')
+  // } else if (session) {
+  //   console.log('session is good to go')
+  //   console.log(session.user?.email)
+  // } else if (!session) {
+  //   console.log('no session');
+  // }
 
   if (!session) {
     router.push('/sign-in')
   }
 
-  // const termArr = await getTerms(session?.user?.email!);
+  const termArrData = await getTerms(session?.user?.email!);
 
-  // useEffect(() => {
-  //   async function fetchTerms() {
-  //     try {
-  //       const terms = await getTerms(session?.user?.email!)
-  //       setTermArr(terms.data);
-  //     } catch (error) {
-  //       console.error("Error fetching schools:", error);
-  //       // Handle the error, e.g., show a user-friendly message or retry the fetch
-  //     }
-  //   }
+  // console.log(termArrData.data)
 
-  //   fetchTerms();
-  // }, []);
+  async function handleFormSubmit(e: React.SyntheticEvent) {
+    e.preventDefault()
+    const form = e.target as HTMLFormElement;
+    // Create a new FormData object from the form
+    const formData = new FormData(form);
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+
+    const response = await fetch(`/api/terms?email=${formData}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+  }
 
   return (
     <main className="search bg-BG_Color w-screen h-screen flex items-center justify-center">
@@ -75,8 +78,7 @@ export default async function Home() {
         <Image src={bookmarkIcon} alt="bookmark icon" width={40} height={40} />
         <p>Saves</p>
       </div>
-
-      <div className="max-w-[18.75rem] rounded-3xl flex flex-col justify-evenly items-center absolute top-160 rounded-25 w-11/12 h-3/6 shadow-md bg-BG_Color ">
+      <form className="max-w-[18.75rem] rounded-3xl flex flex-col justify-evenly items-center absolute top-160 rounded-25 w-11/12 h-3/6 shadow-md bg-BG_Color " onSubmit={handleFormSubmit}>
         <div className=" w-full flex justify-evenly items-end px-4">
           <h1 className=" text-DarkPurp text-screen-titles font-bold text-2xl">
             QUICK SEARCH
@@ -91,23 +93,22 @@ export default async function Home() {
         </div>
         <div className="flex flex-col w-4/5">
           <label className="search__label text-BlackText">Term</label>
-          <select className=" h-14 search__dropdown w-73vw  text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	">
+          <select className=" h-14 search__dropdown w-73vw  text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	px-2" name="term">
             <option value="">Select</option>
-            {/* {termArr ? termArr.map((semester: Semester) => {
-              <option value={semester.id}>{semester.name}</option>
-            }) :
-              <option value="">Loading...</option>} */}
-            <option value="Fall">Fall</option>
-            <option value="Spring">Spring</option>
-            <option value="Summer">Summer</option>
+            {termArrData.data.map((term: Semester) => {
+              return (
+                <option key={term.id} value={term.id}>{term.name}</option>
+              )
+            })}
           </select>
         </div>
         <div className="flex flex-col w-4/5">
           <label className="search__label text-BlackText">Course Number</label>
           <input
-            className=" w-73vw h-14 text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	"
+            className=" w-73vw h-14 text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	px-2"
             type="text"
-            placeholder=""
+            placeholder="Course ID"
+            name="course"
           />
         </div>
 
@@ -125,11 +126,11 @@ export default async function Home() {
             />
           </div>
 
-          <button className="rounded-full  search__button bg-PrimaryPurp shadow-md rounded-36px flex items-center justify-center gap-10 text-White font-Poppins font-semibold h-14 w-34vw p-3.25rem border-none text-xl	px-4	">
+          <button className="rounded-full  search__button bg-PrimaryPurp shadow-md rounded-36px flex items-center justify-center gap-10 text-White font-Poppins font-semibold h-14 w-34vw p-3.25rem border-none text-xl	px-4	" type="submit">
             Search
           </button>
         </div>
-      </div>
+      </form>
       <NavComponent />
     </main>
   );
