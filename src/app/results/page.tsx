@@ -19,8 +19,28 @@ interface ClassData {
     teacherId: number;
 }
 
+interface AllClassData {
+    id: number;
+    courseId: number;
+    semesterId: number;
+    schedule: string;
+    teacherId: number;
+    name: string
+}
+
 async function submitData(term: string, course: string) {
     const request = await fetch(`/api/searchResults?term=${term}&course=${course}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+
+    return request.json()
+}
+
+async function getUserData(email: string) {
+    const request = await fetch(`/api/userClasses?email=${email}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -37,10 +57,12 @@ export default async function Results() {
     const newSession = useSession();
     const { data: session, status } = newSession
 
-    const [classes, setClasses] = useState<ClassData[]>([])
+    const [foundClasses, setFoundClasses] = useState<ClassData[]>([])
+    const [userClasses, setUserClasses] = useState<AllClassData[]>([])
 
     const getTerm = searchParams.get('term') ?? ''
     const getCourse = searchParams.get('course') ?? ''
+    const getEmail = searchParams.get('email') ?? ''
 
     // console.log(getTerm, getCourse)
 
@@ -49,10 +71,19 @@ export default async function Results() {
             router.push('/sign-in')
         }
         submitData(getTerm, getCourse).then((results) => {
-            console.log(results)
-            setClasses(results.classes)
+            // console.log(results)
+            setFoundClasses(results.classes)
+        })
+
+        getUserData(getEmail).then((results) => {
+            console.log(`User classes ${results.data}`)
+            setUserClasses(results.data)
         })
     }, [status])
+
+    useEffect(() => {
+        console.log(userClasses)
+    }, [userClasses])
 
     return (
         <div className="pt-[44px]">
@@ -62,7 +93,7 @@ export default async function Results() {
             </div>
             <p className=" text-PrimaryPurp underline pl-6 pb-3 font-bold">My Schedule</p>
             <div>
-                <ResultsScheduleElement />
+                <ResultsScheduleElement scheduleData={userClasses}/>
             </div>
             <div>
                 <div className="p-6">
@@ -70,7 +101,7 @@ export default async function Results() {
                     <p>Results for: </p><span></span>
                 </div>
                 <section>
-                    <ResultsClassElement resultData={classes} />
+                    <ResultsClassElement resultData={foundClasses} />
                 </section>
             </div>
         </div>

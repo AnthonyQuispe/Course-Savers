@@ -71,15 +71,15 @@ const CourseItem = async ({ opacity, id, courseId, schedule, semesterId, teacher
 
     useEffect(() => {
         getCourseNames(courseId).then((results) => {
-            console.log(results)
+            // console.log(results)
             setClassResult(results)
         })
 
         getTeacherName(teacherId).then((teacherResult) => {
             const { firstname, lastname } = teacherResult;
             let teacherName = `${firstname} ${lastname}`
-            console.log(teacherResult)
-            console.log(teacherName)
+            // console.log(teacherResult)
+            // console.log(teacherName)
             setClassTeacher(teacherName)
         })
 
@@ -88,6 +88,7 @@ const CourseItem = async ({ opacity, id, courseId, schedule, semesterId, teacher
             setStartDate(startDate)
             setEndDate(endDate)
         })
+
     }, [])
 
     function formatDate(startDateString: string, endDateString: string) {

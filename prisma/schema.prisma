@@ -11,16 +11,25 @@ datasource db {
 }
 
 model Users {
-  id          String  @id @default(cuid())
+  id          String        @id @default(cuid())
   firstName   String
   lastName    String
-  school      Schools @relation(fields: [schoolsName], references: [name])
+  school      Schools       @relation(fields: [schoolsName], references: [name])
   schoolsName String
-  campus      Campus  @relation(fields: [campusId], references: [id])
+  campus      Campus        @relation(fields: [campusId], references: [id])
   campusId    Int
   studentId   String
-  email       String  @unique
+  email       String        @unique
   password    String
+  UserClasses UserClasses[]
+}
+
+model UserClasses {
+  id        Int     @id @default(autoincrement())
+  user      Users   @relation(fields: [userEmail], references: [email])
+  userEmail String
+  class     Classes @relation(fields: [classId], references: [id])
+  classId   Int
 }
 
 model Schools {
@@ -75,14 +84,15 @@ model Courses {
 }
 
 model Classes {
-  id         Int       @id @default(autoincrement())
-  course     Courses   @relation(fields: [courseId], references: [id])
-  courseId   Int
-  semester   Semesters @relation(fields: [semesterId], references: [id])
-  semesterId Int
-  schedule   String    @db.VarChar(255)
-  teacher    Teachers  @relation(fields: [teacherId], references: [id])
-  teacherId  Int
+  id          Int           @id @default(autoincrement())
+  course      Courses       @relation(fields: [courseId], references: [id])
+  courseId    Int
+  semester    Semesters     @relation(fields: [semesterId], references: [id])
+  semesterId  Int
+  schedule    String        @db.VarChar(255)
+  teacher     Teachers      @relation(fields: [teacherId], references: [id])
+  teacherId   Int
+  UserClasses UserClasses[]
 }
 
 model Teachers {

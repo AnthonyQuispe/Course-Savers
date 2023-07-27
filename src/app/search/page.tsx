@@ -99,7 +99,7 @@ export default async function Home() {
     // const { classes } = response
 
     // console.log(classes)
-    router.push(`/results/?term=${searchQuery.term}&course=${searchQuery.course}`)
+    router.push(`/results/?term=${searchQuery.term}&course=${searchQuery.course}&email=${session?.user?.email!}`)
   }
 
   return (
