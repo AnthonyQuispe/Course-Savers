@@ -1,30 +1,78 @@
+'use client'
+
 import Image from "next/image"
 import backButtonIcon from "../../../public/icons/back-button-icon.png";
 import filterIcon from "../../../public/icons/filter-icon.png";
 import ResultsScheduleElement from "../components/ResultsScheduleElement/ResultsScheduleElement";
 import ResultsClassElement from "../components/ResultsClassElement/ResultsClassElement";
 
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearchParams } from 'next/navigation'
 
-export default function Results() {
+interface ClassData {
+    id: number;
+    courseId: number;
+    semesterId: number;
+    schedule: string;
+    teacherId: number;
+}
+
+async function submitData(term: string, course: string) {
+    const request = await fetch(`/api/searchResults?term=${term}&course=${course}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+
+    return request.json()
+}
+
+export default async function Results() {
+
+    const searchParams = useSearchParams()
+    const router = useRouter();
+    const newSession = useSession();
+    const { data: session, status } = newSession
+
+    const [classes, setClasses] = useState<ClassData[]>([])
+
+    const getTerm = searchParams.get('term') ?? ''
+    const getCourse = searchParams.get('course') ?? ''
+
+    // console.log(getTerm, getCourse)
+
+    useEffect(() => {
+        if (status !== "authenticated") {
+            router.push('/sign-in')
+        }
+        submitData(getTerm, getCourse).then((results) => {
+            console.log(results)
+            setClasses(results.classes)
+        })
+    }, [status])
+
     return (
-    <div className="pt-[44px]">
-        <div className="flex justify-between px-3">
-            <Image src={backButtonIcon} alt="back button"/>
-            <Image src={filterIcon} alt="filter button"/>
-        </div>
-        <p className=" text-PrimaryPurp underline pl-6 pb-3 font-bold">My Schedule</p>
-        <div>
-            <ResultsScheduleElement />
-        </div>
-        <div>
-            <div className="p-6">
-                <h2 className=" text-DarkPurp text-xl font-extrabold pt-10 pb-3">SELECT CLASSES</h2>
-                <p>Results for: </p><span></span>
+        <div className="pt-[44px]">
+            <div className="flex justify-between px-3">
+                <Image src={backButtonIcon} alt="back button" />
+                <Image src={filterIcon} alt="filter button" />
             </div>
-            <section>
-                <ResultsClassElement />
-            </section>
+            <p className=" text-PrimaryPurp underline pl-6 pb-3 font-bold">My Schedule</p>
+            <div>
+                <ResultsScheduleElement />
+            </div>
+            <div>
+                <div className="p-6">
+                    <h2 className=" text-DarkPurp text-xl font-extrabold pt-10 pb-3">SELECT CLASSES</h2>
+                    <p>Results for: </p><span></span>
+                </div>
+                <section>
+                    <ResultsClassElement resultData={classes} />
+                </section>
+            </div>
         </div>
-    </div>
     )
 }

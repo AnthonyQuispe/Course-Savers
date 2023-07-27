@@ -12,17 +12,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
             // Handle the case when 'email' parameter is not present in the URL
             return NextResponse.json({ error: "Term or course parameter not provided" }, { status: 400 });
         }
-        // const user = await prisma.users.findFirst({
-        //     where: {
-        //         email: reqEmail
-        //     }
-        // })
-        // // console.log(user)
-        // const termArr = await prisma.semesters.findMany({
-        //     where: {
-        //         campusId: user?.campusId
-        //     }
-        // })
+
         const matchingCourses = await prisma.courses.findMany({
             where: {
                 name: { contains: reqCourse }

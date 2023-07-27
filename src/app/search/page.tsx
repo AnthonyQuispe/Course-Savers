@@ -19,6 +19,11 @@ type Semester = {
   endDate: string,
 }
 
+type FormData = {
+  term: string,
+  course: string
+}
+
 async function getTerms(userData: string) {
   const termsArrReq = await fetch(`/api/terms?email=${userData}`, {
     method: 'GET',
@@ -29,6 +34,16 @@ async function getTerms(userData: string) {
   return termsArrReq.json()
 }
 
+// async function submitData(formData: FormData) {
+//   const request = await fetch(`/api/searchResults?term=${formData.term}&course=${formData.course}`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//   })
+
+//   return request.json()
+// }
 
 export default async function Home() {
 
@@ -47,9 +62,11 @@ export default async function Home() {
   //   console.log('no session');
   // }
 
-  if (!session) {
-    router.push('/sign-in')
-  }
+  useEffect(() => {
+    if (status !== "authenticated") {
+      router.push('/sign-in')
+    }
+  }, [status])
 
   const termArrData = await getTerms(session?.user?.email!);
 
@@ -60,16 +77,29 @@ export default async function Home() {
     const form = e.target as HTMLFormElement;
     // Create a new FormData object from the form
     const formData = new FormData(form);
+    let reqTerm: string = ""
+    let reqCourse = ""
     formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
+      // console.log(`${key}: ${value} ${typeof value}`);
+      if (key === "term") {
+        reqTerm = value as string;
+      }
+      if (key === "course") {
+        reqCourse = value as string;
+      }
     });
 
-    const response = await fetch(`/api/terms?email=${formData}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
+    let searchQuery = {
+      term: reqTerm,
+      course: reqCourse
+    }
+
+    // let response = await submitData(searchQuery)
+
+    // const { classes } = response
+
+    // console.log(classes)
+    router.push(`/results/?term=${searchQuery.term}&course=${searchQuery.course}`)
   }
 
   return (
