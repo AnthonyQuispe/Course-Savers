@@ -1,8 +1,8 @@
 import Image from "next/image"
 import backButtonIcon from "../../../public/icons/back-button-icon.png";
 import filterIcon from "../../../public/icons/filter-icon.png";
-import ResultsScheduleElement from "../components/ResultsScheduleElement/ResultsScheduleElement";
-import ResultsClassElement from "../components/ResultsClassElement/ResultsClassElement";
+import ResultsScheduleElement from "../../components/ResultsScheduleElement/ResultsScheduleElement";
+import ResultsClassElement from "../../components/ResultsClassElement/ResultsClassElement";
 
 
 export default function Results() {

@@ -1,9 +1,9 @@
 'use client'
 
 import Image from "next/image";
-import downArrowIcon from "../../../../public/icons/down-arrow-icon.png";
-import upArrowIcon from "../../../../public/icons/up-arrow-icon.png";
-import infoIcon from "../../../../public/icons/info-icon.png";
+import downArrowIcon from "../../../public/icons/down-arrow-icon.png";
+import upArrowIcon from "../../../public/icons/up-arrow-icon.png";
+import infoIcon from "../../../public/icons/info-icon.png";
 import { useState } from "react";
 
 const CourseItem = ({ opacity }: {opacity: string}) => {
