@@ -27,12 +27,12 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           {children}
-        </body>
-        {/* {showNav && ( */}
+          {/* {showNav && ( */}
           <footer>
-          <NavComponent />
-        </footer>
-        {/* )} */}
+            <NavComponent />
+          </footer>
+          {/* )} */}
+        </body>
       </html>
     </Provider>
   );

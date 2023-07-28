@@ -3,8 +3,8 @@
 import Image from "next/image"
 import backButtonIcon from "../../../public/icons/back-button-icon.png";
 import filterIcon from "../../../public/icons/filter-icon.png";
-import ResultsScheduleElement from "../components/ResultsScheduleElement/ResultsScheduleElement";
-import ResultsClassElement from "../components/ResultsClassElement/ResultsClassElement";
+import ResultsScheduleElement from "../../components/ResultsScheduleElement/ResultsScheduleElement";
+import ResultsClassElement from "../../components/ResultsClassElement/ResultsClassElement";
 
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
@@ -31,6 +31,13 @@ interface AllClassData {
 interface ResultsClassElementProps {
     resultsData: ClassData[];
     onAddClassClick: (classId: number) => void;
+}
+
+interface ClassAdded {
+    id: number,
+    name: string,
+    schedule: string,
+    time: string
 }
 
 async function submitData(term: string, course: string) {
@@ -64,14 +71,18 @@ export default function Results() {
 
     const [foundClasses, setFoundClasses] = useState<ClassData[]>([])
     const [userClasses, setUserClasses] = useState<AllClassData[]>([])
-    const [classAdded, setClassAdded] = useState<number | null>(null);
+    const [classAdded, setClassAdded] = useState<ClassAdded | null>();
 
-    const getTerm = searchParams.get('term') ?? ''
+    const getTerm = searchParams.get('terms') ?? ''
     const getCourse = searchParams.get('course') ?? ''
     const getEmail = searchParams.get('email') ?? ''
 
-    const handleAddClassClick = (classId: number) => {
-        setClassAdded(classId);
+    const addToRegisterClass = (classInfo: any) => {
+        if (classAdded && classAdded.id === classInfo.id) {
+            setClassAdded(null); // Toggle to null if the same class is clicked again
+        } else {
+            setClassAdded(classInfo); // Set to the new classInfo if a different class is clicked
+        }
     }
 
     // console.log(getTerm, getCourse)
@@ -86,14 +97,14 @@ export default function Results() {
         })
 
         getUserData(getEmail).then((results) => {
-            console.log(`User classes ${results.data}`)
+            // console.log(`User classes ${results.data}`)
             setUserClasses(results.data)
         })
     }, [status])
 
-    useEffect(() => {
-        console.log(userClasses)
-    }, [userClasses])
+    // useEffect(() => {
+    //     console.log(classAdded)
+    // }, [classAdded])
 
     return (
         <div className="pt-[44px]">
@@ -103,19 +114,21 @@ export default function Results() {
             </div>
             <p className=" text-PrimaryPurp underline pl-6 pb-3 font-bold">My Schedule</p>
             <div>
-                <ResultsScheduleElement scheduleData={userClasses}/>
+                <ResultsScheduleElement scheduleData={userClasses} classToRegister={classAdded} />
             </div>
             <div>
                 <div className="p-6 pt-[3rem]">
-                    <button onClick={() => router.push('/check-out')} className="bg-PrimaryPurp rounded-full w-full p-3 text-white text-xl font-extrabold">Register</button>
+                    { classAdded ?
+                        <button onClick={() => router.push('/check-out')} className="bg-PrimaryPurp rounded-full w-full p-3 text-white text-xl font-extrabold">Register</button> : ""
+                    }
                 </div>
                 <div className="p-6">
                     <h2 className=" text-DarkPurp text-xl font-extrabold pb-3">SELECT CLASSES</h2>
                     <span>Results for: </span>
-                    <span className=" italic">{getCourse === '' ? 'All Courses' : getCourse} - {getTerm}</span>
+                    <span className=" italic">{getCourse === '' ? 'All Courses' : getCourse} {/* - {getTerm} */}</span>
                 </div>
                 <section>
-                    <ResultsClassElement resultData={foundClasses} />
+                    <ResultsClassElement resultData={foundClasses} addToRegisterClass={addToRegisterClass} />
                 </section>
             </div>
         </div>

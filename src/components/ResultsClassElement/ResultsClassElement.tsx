@@ -1,9 +1,9 @@
 'use client'
 
 import Image from "next/image";
-import downArrowIcon from "../../../../public/icons/down-arrow-icon.png";
-import upArrowIcon from "../../../../public/icons/up-arrow-icon.png";
-import infoIcon from "../../../../public/icons/info-icon.png";
+import downArrowIcon from "../../../public/icons/down-arrow-icon.png";
+import upArrowIcon from "../../../public/icons/up-arrow-icon.png";
+import infoIcon from "../../../public/icons/info-icon.png";
 import { useEffect, useState } from "react";
 
 interface ClassData {
@@ -15,7 +15,8 @@ interface ClassData {
 }
 
 interface ResultsClassElementProps {
-    resultData: ClassData[]; // Use 'resultData' instead of 'data'
+    resultData: ClassData[]; // Use 'resultData' instead of 'data',
+    addToRegisterClass: (classInfo: any) => void
 }
 
 interface ClassResult {
@@ -59,7 +60,7 @@ async function getTeacherName(teacherId: number) {
     return request.json()
 }
 
-const CourseItem = ({ id, courseId, schedule, semesterId, teacherId, handleClassClick, selectedClassId, opacity }: { id: number, courseId: number, schedule: string, semesterId: number, teacherId: number, handleClassClick: (classId: number) => void, selectedClassId: number | null, opacity: string }) => {
+const CourseItem = ({ id, courseId, schedule, semesterId, teacherId, handleClassClick, selectedClassId, opacity, addToRegisterClass }: { id: number, courseId: number, schedule: string, semesterId: number, teacherId: number, handleClassClick: (classId: number) => void, selectedClassId: number | null, opacity: string, addToRegisterClass: (classInfo: any) => void }) => {
     const [showDetails, setShowDetails] = useState(false);
 
     const [classResult, setClassResult] = useState<ClassResult>()
@@ -100,10 +101,20 @@ const CourseItem = ({ id, courseId, schedule, semesterId, teacherId, handleClass
         const month2 = (endDate.getMonth() + 1).toString().padStart(2, '0');
         return `${day1}/${month1} - ${day2}/${month2}`;
     }
-    
+
+    function handleRegisteringAClass() {
+        const classReadyToBeAdded = {
+            id: id,
+            name: classResult?.name,
+            schedule: schedule,
+            time: "@ 11a -12p"
+        }
+        addToRegisterClass(classReadyToBeAdded)
+    }
+
 
     return (
-        <div onClick={() => {handleClassClick(id); setShowDetails(!showDetails)}}>
+        <div onClick={() => { handleClassClick(id); setShowDetails(!showDetails) }}>
             <div className={`flex flex-col items-stretch px-6 bg-GrayPurp ${opacity}`}>
                 <div className="flex justify-between items-center">
                     <div className="flex justify-between items-center w-[145px]">
@@ -112,7 +123,7 @@ const CourseItem = ({ id, courseId, schedule, semesterId, teacherId, handleClass
                     </div>
                     <div className="flex items-center">
                         <Image className="w-5 h-5" src={infoIcon} alt="more info button" />
-                        <h2 className="pl-8 underline font-extrabold text-DarkPurp">Add</h2>
+                        <h2 className="pl-8 underline font-extrabold text-DarkPurp" onClick={handleRegisteringAClass}>Add</h2>
                     </div>
                 </div>
             </div>
@@ -138,21 +149,19 @@ const CourseItem = ({ id, courseId, schedule, semesterId, teacherId, handleClass
     )
 };
 
-const ResultsClassElement: React.FC<ResultsClassElementProps> = ({ resultData }) => {
+const ResultsClassElement: React.FC<ResultsClassElementProps> = ({ resultData, addToRegisterClass }) => {
     const [selectedClassId, setSelectedClassId] = useState<number | null>(null);
 
     const handleClassClick = (classId: number) => {
         setSelectedClassId(classId);
     };
 
-    
-
     return (
         <div>
-            {resultData.map((classItem) => {
+            {resultData ? resultData.map((classItem) => {
                 const opacity = classItem.id === selectedClassId ? "" : "opacity-40";
-                return <CourseItem key={classItem.id} {...classItem} handleClassClick={handleClassClick} selectedClassId={selectedClassId} opacity={opacity} />;
-            })}
+                return <CourseItem key={classItem.id} {...classItem} handleClassClick={handleClassClick} addToRegisterClass={addToRegisterClass} selectedClassId={selectedClassId} opacity={opacity} />;
+            }) : <p>Loading</p>}
         </div>
     );
 }

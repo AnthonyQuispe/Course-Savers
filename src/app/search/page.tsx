@@ -69,6 +69,7 @@ export default async function Home() {
   }, [status])
 
   const termArrData = await getTerms(session?.user?.email!);
+  // console.log(termArrData)
 
   // console.log(termArrData.data)
 
@@ -99,7 +100,7 @@ export default async function Home() {
     // const { classes } = response
 
     // console.log(classes)
-    router.push(`/results/?term=${searchQuery.term}&course=${searchQuery.course}&email=${session?.user?.email!}`)
+    router.push(`/results/?terms=${searchQuery.term}&course=${searchQuery.course}&email=${session?.user?.email!}`)
   }
 
   return (
