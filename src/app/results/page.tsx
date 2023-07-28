@@ -106,6 +106,15 @@ export default function Results() {
     //     console.log(classAdded)
     // }, [classAdded])
 
+    function handleRegisterClass() {
+        if (classAdded) {
+            router.push(`/check-out?classId=${classAdded.id}`)
+        } else {
+            throw new Error('No Class Selected')
+        }
+        console.log(classAdded)
+    }
+
     return (
         <div className="pt-[44px]">
             <div className="flex justify-between px-3">
@@ -119,7 +128,7 @@ export default function Results() {
             <div>
                 <div className="p-6 pt-[3rem]">
                     { classAdded ?
-                        <button onClick={() => router.push('/check-out')} className="bg-PrimaryPurp rounded-full w-full p-3 text-white text-xl font-extrabold">Register</button> : ""
+                        <button onClick={handleRegisterClass} className="bg-PrimaryPurp rounded-full w-full p-3 text-white text-xl font-extrabold">Register</button> : ""
                     }
                 </div>
                 <div className="p-6">
