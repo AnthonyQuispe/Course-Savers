@@ -106,7 +106,7 @@ const CourseItem = ({ id, courseId, schedule, semesterId, teacherId, handleClass
         <div onClick={() => {handleClassClick(id); setShowDetails(!showDetails)}}>
             <div className={`flex flex-col items-stretch px-6 bg-GrayPurp ${opacity}`}>
                 <div className="flex justify-between items-center">
-                    <div className="flex justify-between items-center w-[141px]">
+                    <div className="flex justify-between items-center w-[145px]">
                         <h2 className="text-xl font-semibold">{classResult?.name}</h2>
                         <Image src={!showDetails ? downArrowIcon : upArrowIcon} alt="toggle details arrow" />
                     </div>

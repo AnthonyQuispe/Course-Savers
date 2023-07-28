@@ -1,9 +1,11 @@
+'use client'
+
 import Image from "next/image";
 import backButtonIcon from "../../../public/icons/back-button-icon.png";
 import financesIcon from "../../../public/icons/finances-icon.png";
 import infoIcon from "../../../public/icons/info-icon.png";
 import trashIcon from "../../../public/icons/trash-icon.png";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function CheckOut() {
 
@@ -64,7 +66,7 @@ export default function CheckOut() {
                         <p>$400 / $1.6k</p>
                     </div>
                 </div>
-                <button className="bg-PrimaryPurp rounded-full w-full p-3 text-white text-xl font-extrabold">Finalize $428</button>
+                <button onClick={() => router.push('/confirm')} className="bg-PrimaryPurp rounded-full w-full p-3 text-white text-xl font-extrabold">Finalize $428</button>
             </section>
         </div>
     )

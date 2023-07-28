@@ -106,8 +106,11 @@ export default function Results() {
                 <ResultsScheduleElement scheduleData={userClasses}/>
             </div>
             <div>
+                <div className="p-6 pt-[3rem]">
+                    <button onClick={() => router.push('/check-out')} className="bg-PrimaryPurp rounded-full w-full p-3 text-white text-xl font-extrabold">Register</button>
+                </div>
                 <div className="p-6">
-                    <h2 className=" text-DarkPurp text-xl font-extrabold pt-10 pb-3">SELECT CLASSES</h2>
+                    <h2 className=" text-DarkPurp text-xl font-extrabold pb-3">SELECT CLASSES</h2>
                     <span>Results for: </span>
                     <span className=" italic">{getCourse === '' ? 'All Courses' : getCourse} - {getTerm}</span>
                 </div>
