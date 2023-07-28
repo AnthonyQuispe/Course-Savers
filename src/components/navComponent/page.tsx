@@ -5,7 +5,7 @@ import settingsIcon from "../../../public/MenuIcon.svg";
 
 export default function NavComponent() {
   return (
-    <nav className="flex justify-evenly w-full bg-GrayPurp absolute bottom-0">
+    <nav className="flex justify-evenly w-full bg-GrayPurp fixed bottom-0">
       <Image
         className=" w-15vw h-6vh"
         src={profileIcon}
