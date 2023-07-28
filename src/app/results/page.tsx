@@ -112,7 +112,7 @@ export default function Results() {
                     <span className=" italic">{getCourse === '' ? 'All Courses' : getCourse} - {getTerm}</span>
                 </div>
                 <section>
-                    <ResultsClassElement resultData={foundClasses} onAddClassClick={handleAddClassClick} />
+                    <ResultsClassElement resultData={foundClasses} />
                 </section>
             </div>
         </div>

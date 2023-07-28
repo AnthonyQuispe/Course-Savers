@@ -3,12 +3,16 @@ import backButtonIcon from "../../../public/icons/back-button-icon.png";
 import financesIcon from "../../../public/icons/finances-icon.png";
 import infoIcon from "../../../public/icons/info-icon.png";
 import trashIcon from "../../../public/icons/trash-icon.png";
+import { useRouter } from "next/router";
 
 export default function CheckOut() {
+
+    const router = useRouter();
+
     return (
         <div className="pt-[44px]">
             <div className="flex items-center justify-between pl-3 pr-5">
-                <Image src={backButtonIcon} alt="back button" />
+                <Image src={backButtonIcon} alt="back button" onClick={() => router.back()} />
                 <Image className="w-12 h-12" src={financesIcon} alt="finances button" />
             </div>
             <section className="p-6 pt-2">
