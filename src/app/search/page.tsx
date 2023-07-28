@@ -123,7 +123,7 @@ export default async function Home() {
         </div>
         <div className="flex flex-col w-4/5">
           <label className="search__label text-BlackText">Term</label>
-          <select className=" h-14 search__dropdown w-73vw  text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	px-2" name="term">
+          <select className=" h-14 search__dropdown w-73vw  text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	px-4" name="term">
             <option value="">Select</option>
             {termArrData.data.map((term: Semester) => {
               return (
@@ -135,7 +135,7 @@ export default async function Home() {
         <div className="flex flex-col w-4/5">
           <label className="search__label text-BlackText">Course Number</label>
           <input
-            className=" w-73vw h-14 text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	px-2"
+            className=" w-73vw h-14 text-DarkGrayTxt bg-InputGray text-20px font-Poppins font-normal rounded-20px p-0.25rem border-none rounded-2xl	px-4"
             type="text"
             placeholder="Course ID"
             name="course"
@@ -161,7 +161,6 @@ export default async function Home() {
           </button>
         </div>
       </form>
-      <NavComponent />
     </main>
   );
 }

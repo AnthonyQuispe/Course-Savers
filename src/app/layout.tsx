@@ -1,6 +1,10 @@
+'use client'
+
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Provider from "@/context/Provider"
+import NavComponent from "@/components/navComponent/page";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,12 +18,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  // const router = useRouter();
+  // const showNav = router.pathname !== '/';
+
   return (
     <Provider>
       <html lang="en">
         <body className={inter.className}>
           {children}
         </body>
+        {/* {showNav && ( */}
+          <footer>
+          <NavComponent />
+        </footer>
+        {/* )} */}
       </html>
     </Provider>
   );
