@@ -98,7 +98,7 @@ export default async function Results() {
             <div>
                 <div className="p-6">
                     <h2 className=" text-DarkPurp text-xl font-extrabold pt-10 pb-3">SELECT CLASSES</h2>
-                    <p>Results for: </p><span></span>
+                    <p>Results for: </p><span className=" italic"></span>
                 </div>
                 <section>
                     <ResultsClassElement resultData={foundClasses} />
