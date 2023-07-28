@@ -28,6 +28,11 @@ interface AllClassData {
     name: string
 }
 
+interface ResultsClassElementProps {
+    resultsData: ClassData[];
+    onAddClassClick: (classId: number) => void;
+}
+
 async function submitData(term: string, course: string) {
     const request = await fetch(`/api/searchResults?term=${term}&course=${course}`, {
         method: 'GET',
@@ -50,7 +55,7 @@ async function getUserData(email: string) {
     return request.json()
 }
 
-export default async function Results() {
+export default function Results() {
 
     const searchParams = useSearchParams()
     const router = useRouter();
@@ -59,10 +64,15 @@ export default async function Results() {
 
     const [foundClasses, setFoundClasses] = useState<ClassData[]>([])
     const [userClasses, setUserClasses] = useState<AllClassData[]>([])
+    const [classAdded, setClassAdded] = useState<number | null>(null);
 
     const getTerm = searchParams.get('term') ?? ''
     const getCourse = searchParams.get('course') ?? ''
     const getEmail = searchParams.get('email') ?? ''
+
+    const handleAddClassClick = (classId: number) => {
+        setClassAdded(classId);
+    }
 
     // console.log(getTerm, getCourse)
 
@@ -88,7 +98,7 @@ export default async function Results() {
     return (
         <div className="pt-[44px]">
             <div className="flex justify-between px-3">
-                <Image src={backButtonIcon} alt="back button" />
+                <Image src={backButtonIcon} alt="back button" onClick={() => router.back()} />
                 <Image src={filterIcon} alt="filter button" />
             </div>
             <p className=" text-PrimaryPurp underline pl-6 pb-3 font-bold">My Schedule</p>
@@ -98,10 +108,11 @@ export default async function Results() {
             <div>
                 <div className="p-6">
                     <h2 className=" text-DarkPurp text-xl font-extrabold pt-10 pb-3">SELECT CLASSES</h2>
-                    <p>Results for: </p><span className=" italic"></span>
+                    <span>Results for: </span>
+                    <span className=" italic">{getCourse === '' ? 'All Courses' : getCourse} - {getTerm}</span>
                 </div>
                 <section>
-                    <ResultsClassElement resultData={foundClasses} />
+                    <ResultsClassElement resultData={foundClasses} onAddClassClick={handleAddClassClick} />
                 </section>
             </div>
         </div>

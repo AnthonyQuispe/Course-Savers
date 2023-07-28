@@ -59,7 +59,7 @@ async function getTeacherName(teacherId: number) {
     return request.json()
 }
 
-const CourseItem = async ({ opacity, id, courseId, schedule, semesterId, teacherId }: { opacity: string, schedule: string, id: number, courseId: number, semesterId: number, teacherId: number }) => {
+const CourseItem = ({ id, courseId, schedule, semesterId, teacherId, handleClassClick, selectedClassId, opacity }: { id: number, courseId: number, schedule: string, semesterId: number, teacherId: number, handleClassClick: (classId: number) => void, selectedClassId: number | null, opacity: string }) => {
     const [showDetails, setShowDetails] = useState(false);
 
     const [classResult, setClassResult] = useState<ClassResult>()
@@ -100,14 +100,15 @@ const CourseItem = async ({ opacity, id, courseId, schedule, semesterId, teacher
         const month2 = (endDate.getMonth() + 1).toString().padStart(2, '0');
         return `${day1}/${month1} - ${day2}/${month2}`;
     }
+    
 
     return (
-        <div>
+        <div onClick={() => {handleClassClick(id); setShowDetails(!showDetails)}}>
             <div className={`flex flex-col items-stretch px-6 bg-GrayPurp ${opacity}`}>
                 <div className="flex justify-between items-center">
-                    <div className="flex items-center">
+                    <div className="flex justify-between items-center w-[141px]">
                         <h2 className="text-xl font-semibold">{classResult?.name}</h2>
-                        <Image onClick={() => setShowDetails(!showDetails)} src={downArrowIcon} alt="toggle details arrow" />
+                        <Image src={!showDetails ? downArrowIcon : upArrowIcon} alt="toggle details arrow" />
                     </div>
                     <div className="flex items-center">
                         <Image className="w-5 h-5" src={infoIcon} alt="more info button" />
@@ -137,12 +138,20 @@ const CourseItem = async ({ opacity, id, courseId, schedule, semesterId, teacher
     )
 };
 
-
 const ResultsClassElement: React.FC<ResultsClassElementProps> = ({ resultData }) => {
+    const [selectedClassId, setSelectedClassId] = useState<number | null>(null);
+
+    const handleClassClick = (classId: number) => {
+        setSelectedClassId(classId);
+    };
+
+    
+
     return (
         <div>
-            {resultData.map((classItem, index) => {
-                return <CourseItem key={classItem.id} opacity={index === 1 ? "" : "opacity-40"} {...classItem} />;
+            {resultData.map((classItem) => {
+                const opacity = classItem.id === selectedClassId ? "" : "opacity-40";
+                return <CourseItem key={classItem.id} {...classItem} handleClassClick={handleClassClick} selectedClassId={selectedClassId} opacity={opacity} />;
             })}
         </div>
     );

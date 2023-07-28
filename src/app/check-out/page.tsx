@@ -39,7 +39,7 @@ export default function CheckOut() {
                 <h2 className=" text-xl font-medium pt-3 pb-2">Course Costs</h2>
                 <hr className=" text-GrayDivider"></hr>
                 <div className="flex leading-10 justify-between pt-6 pl-4 pr-6 pb-6">
-                    <div className=" font-medium text-right mr-8">
+                    <div className=" font-medium text-right">
                         <p>Sub Total</p>
                         <p>Taxes</p>
                         <p className=" font-bold">Total Cost</p>
