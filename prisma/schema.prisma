@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  relationMode      = "prisma"
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Users {
+  id          String        @id @default(cuid())
+  firstName   String
+  lastName    String
+  school      Schools       @relation(fields: [schoolsName], references: [name])
+  schoolsName String
+  campus      Campus        @relation(fields: [campusId], references: [id])
+  campusId    Int
+  studentId   String
+  email       String        @unique
+  password    String
+  UserClasses UserClasses[]
+}
+
+model UserClasses {
+  id        Int     @id @default(autoincrement())
+  user      Users   @relation(fields: [userEmail], references: [email])
+  userEmail String
+  class     Classes @relation(fields: [classId], references: [id])
+  classId   Int
+}
+
+model Schools {
+  id       String   @id @default(cuid())
+  name     String   @unique
+  students Users[]
+  campus   Campus[]
+}
+
+model Campus {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(255)
+  semester   Semesters[]
+  school     Schools     @relation(fields: [schoolName], references: [name])
+  schoolName String
+  degrees    Degrees[]
+  users      Users[]
+  buildings  Buildings[]
+}
+
+model Semesters {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  campus    Campus    @relation(fields: [campusId], references: [id])
+  campusId  Int
+  year      Int
+  startDate DateTime
+  endDate   DateTime
+  Classes   Classes[]
+}
+
+model Degrees {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  campus   Campus @relation(fields: [campusId], references: [id])
+  campusId Int
+  credits  Int
+}
+
+model Buildings {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  campus   Campus @relation(fields: [campusId], references: [id])
+  campusId Int
+}
+
+model Courses {
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(255)
+  credits Int
+  classes Classes[]
+}
+
+model Classes {
+  id          Int           @id @default(autoincrement())
+  course      Courses       @relation(fields: [courseId], references: [id])
+  courseId    Int
+  semester    Semesters     @relation(fields: [semesterId], references: [id])
+  semesterId  Int
+  schedule    String        @db.VarChar(255)
+  teacher     Teachers      @relation(fields: [teacherId], references: [id])
+  teacherId   Int
+  UserClasses UserClasses[]
+}
+
+model Teachers {
+  id        Int       @id @default(autoincrement())
+  firstname String    @db.VarChar(255)
+  lastname  String    @db.VarChar(255)
+  classes   Classes[]
+}
