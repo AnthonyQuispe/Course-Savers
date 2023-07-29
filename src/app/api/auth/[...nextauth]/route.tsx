@@ -19,7 +19,7 @@ export const authOptions = {
             async authorize(credentials) {
                 //check to see if email and password is valid
                 //if no email or password
-                if (!credentials.email || !credentials.password) {
+                if (!credentials?.email : string || !credentials.password) {
                     return null;
                 }
                 //check to see if user exists
