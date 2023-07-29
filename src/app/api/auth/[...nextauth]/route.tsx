@@ -52,6 +52,6 @@ export const authOptions = {
   debug: process.env.NODE_ENV === "development",
 };
 
-const handler: NextApiHandler = NextAuth(authOptions);
+const handler = NextAuth(authOptions);
 
-export default handler;
+export { handler as GET, handler as POST };
